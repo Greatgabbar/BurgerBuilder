@@ -1,40 +1,35 @@
 import React from 'react'
-import classes from './Ingrediants.css'
+import classes from './Ingrediants.module.css'
 
 const Ingrediants = ( props )=>{
-  console.log("1");
+ let ingredient;
 switch(props.type){
   case ('bread-top'):
-    return(
-      <div className={classes.BreadTop}>
+    ingredient=( <div className={classes.BreadTop}>
         <div className={classes.Seeds1}></div>
         <div className={classes.Seeds2}></div>
-      </div>
-    );
+      </div>);
+    break;
   case ('bread-bottom'):
-    return(
-      <div className={classes.BreadBottom}></div>
-    );
+      ingredient=<div className={classes.BreadBottom}></div>
+    break;
   case ('meat'):
-    return(
-      <div className={classes.Meat}></div>
-    );
+    ingredient = <div className={classes.Meat}></div>
   break;
   case ('cheese'):
-    return(
-      <div className={classes.Cheese}></div>
-    );
+      ingredient= <div className={classes.Cheese}></div>
   break;
   case ('salad'):
-    return(
-      <div className={classes.Salad}></div>
-    );
+    ingredient=<div className={classes.Salad}></div>
+  break;
+  case ('bacon'):
+    ingredient=<div className={classes.Bacon}></div>
   break;  
   default:
-    return;
+    ingredient=null
   break;
 }
-
+return ingredient;
 }
 
 export default Ingrediants;
