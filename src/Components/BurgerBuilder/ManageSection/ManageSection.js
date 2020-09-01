@@ -8,7 +8,7 @@ const ManageSection = ( props )=>{
  const obj=Object.keys(props.type);
 const list=obj.map((ingdata)=>{
   return(
-    <List key={ingdata} click={()=>{props.added(ingdata)}} less={()=>{props.less(ingdata)}} type={ingdata}></List>
+    <List key={ingdata} disable={props.disable[ingdata]} click={()=>{props.added(ingdata)}} less={()=>{props.less(ingdata)}} type={ingdata}></List>
   )
 })
 

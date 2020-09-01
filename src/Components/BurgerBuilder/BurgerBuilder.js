@@ -19,7 +19,8 @@ class BurgerBuilder extends Component{
       salad:0,
       cheese:0
     },
-    priceTotal:4
+    priceTotal:4,
+    disable : false
   }
 
   
@@ -39,6 +40,7 @@ class BurgerBuilder extends Component{
     });
   }
 
+
   decrementPrice = (type)=>{
     const prevPrice=price[type];
     let prevQuan=this.state.ingrediants[type];
@@ -49,18 +51,29 @@ class BurgerBuilder extends Component{
     prevPT=prevPT - prevPrice;
     prevQuan=prevQuan-1;
     UpdatedQuan[type]=prevQuan;
+    let disabled=this.state.disable;
+    if(prevQuan<=0){
+      disabled=true;
+    }
     this.setState({
       ingrediants : UpdatedQuan,
-      priceTotal : prevPT
+      priceTotal : prevPT,
+      disable : disabled
     });
   }
   
   render(){
+    let disabledInfo={
+      ...this.state.ingrediants
+    }
+    for(let key in disabledInfo){
+      disabledInfo[key]=disabledInfo[key] <=0;
+    }
     return(
       <Aux>
         <Header/>
         <BurgerSection ingrediants={this.state.ingrediants}/>
-        <ManageSection price={this.state.priceTotal} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice}/>
+        <ManageSection price={this.state.priceTotal} disable={disabledInfo} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice}/>
       </Aux>
     )
   }
