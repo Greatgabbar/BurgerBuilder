@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import BurgerSection from './BurgerSection/BurgerSection';
 import ManageSection from './ManageSection/ManageSection';
 import Aux from '../HOC/Aux/Aux'
-import Header from '../Header/Header';
 import Modal from './Modal/Modal';
 import OrderSummary from './ManageSection/List/OrderSummary/OrderSummary';
 
@@ -94,7 +93,6 @@ class BurgerBuilder extends Component{
     }
     return(
       <Aux>
-        <Header/>
         <Modal show={this.state.checkout} click={this.rcheckouting}>
           <OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} cancel={this.rcheckouting} confirm={this.onConfirm} />
         </Modal>
