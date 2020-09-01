@@ -3,6 +3,8 @@ import BurgerSection from './BurgerSection/BurgerSection';
 import ManageSection from './ManageSection/ManageSection';
 import Aux from '../HOC/Aux/Aux'
 import Header from '../Header/Header';
+import Modal from './Modal/Modal';
+import OrderSummary from './ManageSection/List/OrderSummary/OrderSummary';
 
 const price ={
   meat:2.1,
@@ -20,7 +22,8 @@ class BurgerBuilder extends Component{
       cheese:0
     },
     priceTotal:4,
-    disable : false
+    purchasing : true,
+    checkout : false
   }
 
   
@@ -34,9 +37,11 @@ class BurgerBuilder extends Component{
     prevPT=prevPT + prevPrice;
     prevQuan=prevQuan+1;
     UpdatedQuan[type]=prevQuan;
+    let disabled=this.purchasing(prevPT);
     this.setState({
       ingrediants : UpdatedQuan,
-      priceTotal : prevPT
+      priceTotal : prevPT,
+      purchasing : disabled
     });
   }
 
@@ -51,17 +56,29 @@ class BurgerBuilder extends Component{
     prevPT=prevPT - prevPrice;
     prevQuan=prevQuan-1;
     UpdatedQuan[type]=prevQuan;
-    let disabled=this.state.disable;
-    if(prevQuan<=0){
-      disabled=true;
-    }
+    let disabled=this.purchasing(prevPT);
     this.setState({
       ingrediants : UpdatedQuan,
       priceTotal : prevPT,
-      disable : disabled
+      purchasing : disabled
     });
   }
+
+  purchasing=(price)=>{
+    if(price<=4){
+      return true;
+    }else{
+      return false;
+    }
+  }
   
+  checkouting=()=>{
+    console.log(32)
+    let lol=this.state.checkout;
+    lol=true;
+    this.setState({checkout : lol});
+  }
+
   render(){
     let disabledInfo={
       ...this.state.ingrediants
@@ -72,8 +89,11 @@ class BurgerBuilder extends Component{
     return(
       <Aux>
         <Header/>
+        <Modal show={this.state.checkout}>
+          <OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} />
+        </Modal>
         <BurgerSection ingrediants={this.state.ingrediants}/>
-        <ManageSection price={this.state.priceTotal} disable={disabledInfo} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice}/>
+        <ManageSection price={this.state.priceTotal} disable={disabledInfo} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice} purchasing={this.state.purchasing} click={this.checkouting}/>
       </Aux>
     )
   }

@@ -6,13 +6,17 @@ import classes from './BurgerSection.module.css'
 
 
 const BurgerSection=( props )=>{
-  console.log(props.ingrediants)
-  const ingrediants=Object.keys(props.ingrediants)
+  let ingrediants=Object.keys(props.ingrediants)
                       .map((igKey)=>{
                         return [...Array(props.ingrediants[igKey])].map((_,i)=>{
                           return <Ingrediants type={igKey} key={igKey+i} />
                         })
-                      });
+                      }).reduce((arr,item)=>{
+                         return arr.concat(item);
+                      },[])
+    if(ingrediants.length===0){
+      ingrediants=<p>Please Add Some Topics :)</p>
+    }
   return(
     <Aux>
     <div className={classes.Section}>

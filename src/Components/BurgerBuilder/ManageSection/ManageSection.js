@@ -17,6 +17,7 @@ return (
     <div className={classes.Manage}>
     <p><strong>Your Total Amount is : {props.price.toFixed(2)}</strong></p>
       {list}
+      <button disabled={props.purchasing} onClick={props.click} className={classes.OrderButton}>CheckOut</button>
     </div>
   </Aux>
 )
