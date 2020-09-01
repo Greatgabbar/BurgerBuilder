@@ -5,19 +5,17 @@ import classes from './ManageSection.module.css'
 
 
 const ManageSection = ( props )=>{
-  const obj=[
-    'Salad','Bacon','Cheese','Meat'
-  ];
-
+ const obj=Object.keys(props.type);
 const list=obj.map((ingdata)=>{
   return(
-    <List key={ingdata} type={ingdata}></List>
+    <List key={ingdata} click={()=>{props.added(ingdata)}} less={()=>{props.less(ingdata)}} type={ingdata}></List>
   )
 })
 
 return (
   <Aux>
     <div className={classes.Manage}>
+    <p><strong>Your Total Amount is : {props.price.toFixed(2)}</strong></p>
       {list}
     </div>
   </Aux>

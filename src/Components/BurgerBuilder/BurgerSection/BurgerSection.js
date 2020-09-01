@@ -6,6 +6,7 @@ import classes from './BurgerSection.module.css'
 
 
 const BurgerSection=( props )=>{
+  console.log(props.ingrediants)
   const ingrediants=Object.keys(props.ingrediants)
                       .map((igKey)=>{
                         return [...Array(props.ingrediants[igKey])].map((_,i)=>{
