@@ -72,11 +72,17 @@ class BurgerBuilder extends Component{
     }
   }
   
+  onConfirm=()=>{
+    alert('You clicked on Continue :)');
+  }
+
   checkouting=()=>{
-    console.log(32)
     let lol=this.state.checkout;
     lol=true;
     this.setState({checkout : lol});
+  }
+  rcheckouting=()=>{
+    this.setState({checkout:false});
   }
 
   render(){
@@ -89,8 +95,8 @@ class BurgerBuilder extends Component{
     return(
       <Aux>
         <Header/>
-        <Modal show={this.state.checkout}>
-          <OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} />
+        <Modal show={this.state.checkout} click={this.rcheckouting}>
+          <OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} cancel={this.rcheckouting} confirm={this.onConfirm} />
         </Modal>
         <BurgerSection ingrediants={this.state.ingrediants}/>
         <ManageSection price={this.state.priceTotal} disable={disabledInfo} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice} purchasing={this.state.purchasing} click={this.checkouting}/>
