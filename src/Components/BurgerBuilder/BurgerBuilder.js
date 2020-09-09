@@ -5,6 +5,8 @@ import Aux from '../HOC/Aux/Aux'
 import Modal from './Modal/Modal';
 import axios from '../../axios-order';
 import OrderSummary from './ManageSection/List/OrderSummary/OrderSummary';
+import Spinner from './Spinners/Spinner';
+
 
 const price ={
   meat:2.1,
@@ -23,7 +25,8 @@ class BurgerBuilder extends Component{
     },
     priceTotal:4,
     purchasing : true,
-    checkout : false
+    checkout : false,
+    loading : false
   }
 
   
@@ -73,6 +76,7 @@ class BurgerBuilder extends Component{
   }
   
   onConfirm=()=>{
+    this.setState({loading : true})
     const order={
       ingrediants : this.state.ingrediants,
       totalPrice : this.state.priceTotal,
@@ -84,10 +88,10 @@ class BurgerBuilder extends Component{
     };
     axios.post('/orders.json',order)
       .then((data)=>{
-        console.log(data);
+        this.setState({loading:true,checkout:false});
       })
       .catch((err)=>{
-        console.log(err);
+        this.setState({loading:true,checkout:false});
       })
   }
 
@@ -107,10 +111,16 @@ class BurgerBuilder extends Component{
     for(let key in disabledInfo){
       disabledInfo[key]=disabledInfo[key] <=0;
     }
+    let orders=<OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} cancel={this.rcheckouting} confirm={this.onConfirm} />
+
+    if(this.state.loading){
+      orders=<Spinner />
+    }
+
     return(
       <Aux>
         <Modal show={this.state.checkout} click={this.rcheckouting}>
-          <OrderSummary type={this.state.ingrediants} price={this.state.priceTotal} cancel={this.rcheckouting} confirm={this.onConfirm} />
+          {orders}
         </Modal>
         <BurgerSection ingrediants={this.state.ingrediants}/>
         <ManageSection price={this.state.priceTotal} disable={disabledInfo} type={this.state.ingrediants} less={this.decrementPrice} added={this.incrementPrice} purchasing={this.state.purchasing} click={this.checkouting}/>
