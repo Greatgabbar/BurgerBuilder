@@ -6,6 +6,7 @@ import Modal from './Modal/Modal';
 import axios from '../../axios-order';
 import OrderSummary from './ManageSection/List/OrderSummary/OrderSummary';
 import Spinner from './Spinners/Spinner';
+import ErrHandle from '../HOC/ErrModal/ErrModal';
 
 
 const price ={
@@ -86,7 +87,7 @@ class BurgerBuilder extends Component{
         address:"House no. 272A Gali no. 1 Shastri Colony Faridabad",
       }
     };
-    axios.post('/orders.json',order)
+    axios.post('/orders',order)
       .then((data)=>{
         this.setState({loading:true,checkout:false});
       })
@@ -129,4 +130,4 @@ class BurgerBuilder extends Component{
   }
 } 
 
-export default BurgerBuilder;
+export default ErrHandle(BurgerBuilder,axios);
