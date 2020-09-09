@@ -87,7 +87,7 @@ class BurgerBuilder extends Component{
         address:"House no. 272A Gali no. 1 Shastri Colony Faridabad",
       }
     };
-    axios.post('/orders',order)
+    axios.post('/orders.json',order)
       .then((data)=>{
         this.setState({loading:true,checkout:false});
       })
