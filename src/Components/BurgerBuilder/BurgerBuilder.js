@@ -3,6 +3,7 @@ import BurgerSection from './BurgerSection/BurgerSection';
 import ManageSection from './ManageSection/ManageSection';
 import Aux from '../HOC/Aux/Aux'
 import Modal from './Modal/Modal';
+import axios from '../../axios-order';
 import OrderSummary from './ManageSection/List/OrderSummary/OrderSummary';
 
 const price ={
@@ -72,7 +73,22 @@ class BurgerBuilder extends Component{
   }
   
   onConfirm=()=>{
-    alert('You clicked on Continue :)');
+    const order={
+      ingrediants : this.state.ingrediants,
+      totalPrice : this.state.priceTotal,
+      contact : {
+        name:"Shubham Trivedi",
+        email : "shubham072001@gmail.com",
+        address:"House no. 272A Gali no. 1 Shastri Colony Faridabad",
+      }
+    };
+    axios.post('/orders.json',order)
+      .then((data)=>{
+        console.log(data);
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }
 
   checkouting=()=>{
