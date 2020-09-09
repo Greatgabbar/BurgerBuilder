@@ -6,7 +6,7 @@ import Sidedrawer from '../Header/Sidedrawer/Sidedrawer';
 
 class Layout extends Component{
   state={
-    action:true
+    action:false
   }
   clickhandle=()=>{
     this.setState({action:false});

@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './Ingrediants.module.css'
+import PropTypes from 'prop-types';
 
 const Ingrediants = ( props )=>{
  let ingredient;
@@ -30,6 +31,10 @@ switch(props.type){
   break;
 }
 return ingredient;
+}
+
+Ingrediants.propTypes={
+  type : PropTypes.string.isRequired
 }
 
 export default Ingrediants;
