@@ -10,16 +10,21 @@ const ErrHandle = (WrappedComp,axios)=>{
    }
    
     componentWillMount(){
-    axios.interceptors.request.use(req=>{
+    this.reqInter=axios.interceptors.request.use(req=>{
       this.setState({error : null});
       return req;
     });
 
-    axios.interceptors.response.use(res=>res,err=>{
+    this.resInter=axios.interceptors.response.use(res=>res,err=>{
       console.log(err);
       this.setState({error : err.message});
     })
 
+   }
+
+   componentWillUnmount(){
+    axios.interceptors.request.eject(this.reqInter);
+    axios.interceptors.response.eject(this.resInter);
    }
    
    handleClick=()=>{
