@@ -11,11 +11,19 @@ class Checkout extends Component{
       cheese : 1
     }
   }
+
+  checkoutContinue=()=>{
+    console.log(this.props)
+    this.props.history.replace('/form');
+  }
+  checkoutCancel = () => {
+    this.props.history.goBack();
+  }
   
   render(){
     return(
       <Aux>
-        <Check ingrediants={this.state.ingrediants} /> 
+        <Check continue={this.checkoutContinue} cancel={this.checkoutCancel} ingrediants={this.state.ingrediants} /> 
       </Aux>
     )
   }

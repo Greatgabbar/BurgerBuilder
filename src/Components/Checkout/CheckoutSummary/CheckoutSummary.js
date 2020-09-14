@@ -10,8 +10,8 @@ const Check = ( props )=>{
        <div style={{width:"100%"}}>
          <BurgerSection ingrediants={props.ingrediants} />
        </div>
-       <Button btnType= "Danger" >Cancel</Button>
-       <Button btnType= "Success" >Continue</Button>
+       <Button btnType= "Danger" click={props.cancel} >Cancel</Button>
+       <Button btnType= "Success" click={props.continue} >Continue</Button>
      </div>
    )
 }
