@@ -6,22 +6,22 @@ import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component{
   state={
-    ingrediants : {
-      bacon :0,
-      cheese : 0,
-      meat :0,
-      salad :0
-    }
+    ingrediants :null,
+    priceTotal : null
   }
 
-  componentDidMount=()=>{
+  componentWillMount=()=>{
     console.log(this.props); 
     const queryStr = new URLSearchParams(this.props.location.search);
     const ing={};
     queryStr.forEach((value,key)=>{
-      ing[key] = +value;
+      if(key==='price'){
+        this.setState({priceTotal : +value});
+      }else{
+        ing[key] = +value;
+      }
     })
-    // for(let i of  queryStr.entries()){
+    // for(let i of  queryStr.entries()){   //obj.entries to get key and value
     //   ing[i[0]] = +i[1]
     // }
     console.log(ing);
@@ -41,7 +41,9 @@ class Checkout extends Component{
     return(
       <Aux>
         <Check continue={this.checkoutContinue} cancel={this.checkoutCancel} ingrediants={this.state.ingrediants} /> 
-        <Route path={this.props.match.path + '/form'} component={ContactData} />
+        <Route path={this.props.match.path + '/form'} render={(props)=>
+          <ContactData history={this.props.history} ingrediants={this.state.ingrediants} price={this.state.priceTotal} />
+        } />
       </Aux>
     )
   }
