@@ -3,6 +3,7 @@ import classes from './ContactData.module.css'
 import Button from '../../BurgerBuilder/Button/Button'
 import axios from '../../../axios-order'
 import Spinner from '../../BurgerBuilder/Spinners/Spinner'
+import Input from '../../BurgerBuilder/Input/Input'
 
 
 class ContactData extends Component {
@@ -42,10 +43,10 @@ class ContactData extends Component {
   render() {
     let form = (
       <form >
-        <input type="text" name="name" placeholder="Enter Your Name" />
-        <input type="email" name="email" placeholder="Enter Your Email" />
-        <input type="text" name="street" placeholder="Enter Street" />
-        <input type="text" name="code" placeholder="Enter Postal Code" />
+        <Input inputtype="input" type="text" name="name" placeholder="Enter Your Name" />
+        <Input inputtype="input" type="email" name="email" placeholder="Enter Your Email" />
+        <Input inputtype="input" type="text" name="street" placeholder="Enter Street" />
+        <Input inputtype="input" type="text" name="code" placeholder="Enter Postal Code" />
         <Button click={this.clickHandle} btnType="Success">Order</Button>
       </form>
     )
