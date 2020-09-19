@@ -8,11 +8,64 @@ import Input from '../../BurgerBuilder/Input/Input'
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    adddress: {
-      street: '',
-      postalCode: ''
+    orderForm:{
+      name:{
+        type: 'input',
+        config:{
+          name : "name",
+          placeholder:"Enter Name",
+          type : "text"
+        },
+        value : ''
+      },
+      email:{
+        type: 'input',
+        config:{
+          name : "email",
+          placeholder:"Enter Email",
+          type : "email"
+        },
+        value : ''
+      },
+      address:{
+        type: 'input',
+        config:{
+          name : "address",
+          placeholder:"Enter Address",
+          type : "text"
+        },
+        value : ''
+      },
+      pincode:{
+        type: 'input',
+        config:{
+          name : "pincode",
+          placeholder:"Enter Pincode",
+          type : "number"
+        },
+        value : ''
+      },
+      country:{
+        type: 'input',
+        config:{
+          name : "country",
+          placeholder:"Enter country",
+          type : "text"
+        },
+        value : ''
+      },
+      delivery:{
+        type: 'input',
+        config:{
+          name : "delivery",
+          option :[
+            {value : 'fastest',displayValue : 'Fastest'},
+            {value : 'standerd',displayValue : 'Standerd'}
+        ],
+          placeholder : 'Enter Delivery Type'
+        },
+        value : ''
+      }
     },
     loading: false
   }
@@ -41,15 +94,18 @@ class ContactData extends Component {
   }
 
   render() {
-    let form = (
-      <form >
-        <Input inputtype="input" type="text" name="name" placeholder="Enter Your Name" />
-        <Input inputtype="input" type="email" name="email" placeholder="Enter Your Email" />
-        <Input inputtype="input" type="text" name="street" placeholder="Enter Street" />
-        <Input inputtype="input" type="text" name="code" placeholder="Enter Postal Code" />
-        <Button click={this.clickHandle} btnType="Success">Order</Button>
-      </form>
-    )
+const formEle=[];
+    for(let i in this.state.orderForm){
+      formEle.push({
+        ...this.state.orderForm[i],
+        id : i
+      })
+    }
+
+
+    let form = formEle.map((data)=>{
+      return <Input {...data} key={data.id}  />
+    })
 
     if (this.state.loading) {
       form = <Spinner />
