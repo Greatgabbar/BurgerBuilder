@@ -8,63 +8,63 @@ import Input from '../../BurgerBuilder/Input/Input'
 
 class ContactData extends Component {
   state = {
-    orderForm:{
-      name:{
+    orderForm: {
+      name: {
         type: 'input',
-        config:{
-          name : "name",
-          placeholder:"Enter Name",
-          type : "text"
+        config: {
+          name: "name",
+          placeholder: "Enter Name",
+          type: "text"
         },
-        value : ''
+        value: ''
       },
-      email:{
+      email: {
         type: 'input',
-        config:{
-          name : "email",
-          placeholder:"Enter Email",
-          type : "email"
+        config: {
+          name: "email",
+          placeholder: "Enter Email",
+          type: "email"
         },
-        value : ''
+        value: ''
       },
-      address:{
+      address: {
         type: 'input',
-        config:{
-          name : "address",
-          placeholder:"Enter Address",
-          type : "text"
+        config: {
+          name: "address",
+          placeholder: "Enter Address",
+          type: "text"
         },
-        value : ''
+        value: ''
       },
-      pincode:{
+      pincode: {
         type: 'input',
-        config:{
-          name : "pincode",
-          placeholder:"Enter Pincode",
-          type : "number"
+        config: {
+          name: "pincode",
+          placeholder: "Enter Pincode",
+          type: "number"
         },
-        value : ''
+        value: ''
       },
-      country:{
+      country: {
         type: 'input',
-        config:{
-          name : "country",
-          placeholder:"Enter country",
-          type : "text"
+        config: {
+          name: "country",
+          placeholder: "Enter country",
+          type: "text"
         },
-        value : ''
+        value: ''
       },
-      delivery:{
-        type: 'input',
-        config:{
-          name : "delivery",
-          option :[
-            {value : 'fastest',displayValue : 'Fastest'},
-            {value : 'standerd',displayValue : 'Standerd'}
-        ],
-          placeholder : 'Enter Delivery Type'
+      delivery: {
+        type: 'checkbox',
+        config: {
+          name: "delivery",
+          option: [
+            { value: 'fastest', displayValue: 'Fastest' },
+            { value: 'standerd', displayValue: 'Standerd' }
+          ],
+          placeholder: 'Enter Delivery Type'
         },
-        value : ''
+        value: ''
       }
     },
     loading: false
@@ -93,18 +93,26 @@ class ContactData extends Component {
       })
   }
 
+  changeHandle=(e)=>{
+   let value=e.target.value;
+    this.setState({ orderForm : {
+      ...this.state.orderForm,
+      [e.target.name] : value
+    } })
+  }
+
   render() {
-const formEle=[];
-    for(let i in this.state.orderForm){
+    const formEle = [];
+    for (let i in this.state.orderForm) {
       formEle.push({
         ...this.state.orderForm[i],
-        id : i
+        id: i
       })
     }
 
 
-    let form = formEle.map((data)=>{
-      return <Input {...data} key={data.id}  />
+    let form = formEle.map((data) => {
+      return <Input {...data} key={data.id} change={this.changeHandle} />
     })
 
     if (this.state.loading) {
@@ -115,13 +123,10 @@ const formEle=[];
       <div className={classes.ContactData}>
         <h4>Enter Your Contact Data</h4>
         {form}
+        <Button btnType="Success" click={this.clickHandle}>Order Now</Button>
       </div>
     )
   }
-
-
-
-
 }
 
 export default ContactData
