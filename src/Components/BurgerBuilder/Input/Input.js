@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './Input.module.css'
-
+ 
 const Input = (props) => {
   let inputEle = '';
   switch (props.type) {
@@ -11,7 +11,7 @@ const Input = (props) => {
       inputEle = <textarea className={classes.InputEle} {...props.config} onChange={props.change} value={props.value} />
       break;
     case 'checkbox':
-      inputEle = (<select className={classes.InputEle} name={props.config.name}>
+      inputEle = (<select className={classes.InputEle} name={props.config.name} value={props.value} onChange={props.change}>
         {props.config.option.map((data)=>{
          return <option key={data.value} value={data.value} >{data.displayValue}</option>
         })}
