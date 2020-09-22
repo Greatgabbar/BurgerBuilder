@@ -89,7 +89,7 @@ class ContactData extends Component {
             { value: 'standard', displayValue: 'Standard' }
           ]
         },
-        value: '',
+        value: 'fastest',
         valid :true
       }
     },
@@ -103,7 +103,7 @@ class ContactData extends Component {
     for (let i in this.state.orderForm) {
       order[i] = this.state.orderForm[i].value
     }
-    // console.log(order);
+    console.log(order);
     axios.post('/orders.json', order)
       .then((data) => {
         console.log(data);
