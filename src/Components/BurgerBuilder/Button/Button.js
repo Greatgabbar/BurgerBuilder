@@ -5,9 +5,9 @@ import Aux from '../../HOC/Aux/Aux';
 const Button = ( props ) => {
     return(
       <Aux>
-        <div onClick={props.click} className={[classes.Button,classes[props.btnType]].join(' ')}>
+        <button onClick={props.click} disabled={props.disable} className={[classes.Button,classes[props.btnType]].join(' ')}>
         {props.children}
-        </div>
+        </button>
       </Aux>
     )
 }

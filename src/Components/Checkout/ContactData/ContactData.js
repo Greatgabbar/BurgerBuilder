@@ -16,7 +16,13 @@ class ContactData extends Component {
           placeholder: "Enter Name",
           type: "text"
         },
-        value: ''
+        value: '',
+        valid: false,
+        validation: {
+          required: true,
+          minLength: 4
+        },
+        touch: false
       },
       email: {
         type: 'input',
@@ -25,7 +31,12 @@ class ContactData extends Component {
           placeholder: "Enter Email",
           type: "email"
         },
-        value: ''
+        value: '',
+        valid: false,
+        validation: {
+          required: true
+        },
+        touch: false
       },
       address: {
         type: 'input',
@@ -34,7 +45,12 @@ class ContactData extends Component {
           placeholder: "Enter Address",
           type: "text"
         },
-        value: ''
+        value: '',
+        valid: false,
+        validation: {
+          required: true
+        },
+        touch: false
       },
       pincode: {
         type: 'input',
@@ -43,7 +59,12 @@ class ContactData extends Component {
           placeholder: "Enter Pincode",
           type: "number"
         },
-        value: ''
+        value: '',
+        valid: false,
+        validation: {
+          required: true
+        },
+        touch: false
       },
       country: {
         type: 'input',
@@ -52,7 +73,12 @@ class ContactData extends Component {
           placeholder: "Enter country",
           type: "text"
         },
-        value: ''
+        value: '',
+        valid: false,
+        validation: {
+          required: true
+        },
+        touch: false
       },
       delivery: {
         type: 'checkbox',
@@ -63,10 +89,12 @@ class ContactData extends Component {
             { value: 'standard', displayValue: 'Standard' }
           ]
         },
-        value: ''
+        value: '',
+        valid :true
       }
     },
-    loading: false
+    loading: false,
+    formValid : false
   }
 
   clickHandle = () => {
@@ -87,6 +115,17 @@ class ContactData extends Component {
       })
   }
 
+  validationCheck = (prop, value) => {
+    let valid = true;
+    if (prop.required) {
+      valid = value.trim() !== '' && valid;
+    }
+    if (prop.minLength) {
+      valid = value.length >= prop.minLength && valid;
+    }
+    return valid;
+  }
+
   changeHandle = (e, element) => {
     //  here we want a the value props so to get we have to deeply copy the state because in state the value is in orederForm then the specified field like name,email etc and then we get specific field value so we have to first get the params that we are changing
 
@@ -100,8 +139,15 @@ class ContactData extends Component {
     }
 
     fieldVal.value = e.target.value;
+    if (fieldVal.validation)
+      fieldVal.valid = this.validationCheck(fieldVal.validation, fieldVal.value);
     updatedForm[element] = fieldVal;
-    this.setState({ orderForm: updatedForm });
+    updatedForm[element].touch = true;
+    let formValid=true;
+    for(let i in updatedForm){
+      formValid = updatedForm[i].valid && formValid;
+    }
+    this.setState({ orderForm: updatedForm ,formValid:formValid });
   }
 
   render() {
@@ -115,7 +161,7 @@ class ContactData extends Component {
 
 
     let form = formEle.map((data) => {
-      return <Input {...data} key={data.id} change={(e) => this.changeHandle(e, data.id)} />
+      return <Input {...data} key={data.id} touch={data.touch} invalid={!data.valid} shouldValid={data.validation} change={(e) => this.changeHandle(e, data.id)} />
     })
 
     if (this.state.loading) {
@@ -126,7 +172,7 @@ class ContactData extends Component {
       <div className={classes.ContactData}>
         <h4>Enter Your Contact Data</h4>
         {form}
-        <Button btnType="Success" click={this.clickHandle}>Order Now</Button>
+        <Button btnType="Success" disable={!this.state.formValid} click={this.clickHandle}>Order Now</Button>
       </div>
     )
   }
