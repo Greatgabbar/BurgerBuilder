@@ -4,7 +4,7 @@ import Button from '../../BurgerBuilder/Button/Button'
 import axios from '../../../axios-order'
 import Spinner from '../../BurgerBuilder/Spinners/Spinner'
 import Input from '../../BurgerBuilder/Input/Input'
-
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
   state = {
@@ -104,7 +104,12 @@ class ContactData extends Component {
       order[i] = this.state.orderForm[i].value
     }
     console.log(order);
-    axios.post('/orders.json', order)
+    const orderData={
+      contact : order,
+      ingrediants : this.props.ing,
+      totalPrice : this.props.price
+    }
+    axios.post('/orders.json', orderData)
       .then((data) => {
         console.log(data);
         this.setState({ loading: true });
@@ -178,4 +183,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData
+const mapStateToProps = (state) =>{
+  return{
+    ing : state.ingrediants,
+    price : state.priceTotal
+  }
+}
+
+export default connect(mapStateToProps)(ContactData)
